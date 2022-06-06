@@ -1,0 +1,26 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  height: 70px;
+  margin: 25px 0;
+  width: 100%;
+
+  .navbar-brand {
+    height: 100%;
+    padding: 5px 25px 25px 0;
+    width: 70px;
+  }
+
+  .navbar-menu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    width: 50%;
+
+    .navbar-link {
+      cursor: pointer;
+      padding: 10px 15px;
+    }
+  }
+}
