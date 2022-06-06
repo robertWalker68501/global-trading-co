@@ -1,70 +1,83 @@
-# Getting Started with Create React App
+# Global Trading Co. - React learning project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a project to learn [React.js](https://reactjs.org/). A fun project for polishing frontend development skills. Not only is React learned in this project, so are many others that will be listed is the "Built with" section.
 
-## Available Scripts
+## Table of contents
 
-In the project directory, you can run:
+- [Overview](#overview)
+  - [The gaols](#the-goals)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+- [Author](#author)
 
-### `npm start`
+## Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### The goals
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Users should be able to create a new account
+- Users be able to log in with a newly created account
+- Users should be able to log in with Google or other social media account
+- Users should be able to log out
+- Users should see the optimal layout for their device's screen size
+- See hover states for interactive elements
+- Make a selection of which item to add to cart
+- See an updated items count in the shopping icon & dropdown
+- See the total number of items on the checkout page
+- Remove items from cart
 
-### `npm test`
+### Screenshot
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![](./screenshot.jpg)
 
-### `npm run build`
+### Links
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Live Site URL: [Global Trading Company](https://chipper-heliotrope-f96e3b.netlify.app/)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## My process
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Built with
 
-### `npm run eject`
+- Semantic HTML5 markup
+- CSS custom properties
+- Flexbox
+- SCSS
+- Mobile-first workflow
+- [React](https://reactjs.org/) - JS library
+- [React Router](https://reactrouter.com/) -  A standard library for routing in React
+- [Redux](https://redux.js.org/) - Predictable State Container for JS Apps
+- [React Redux](https://react-redux.js.org/) - Official React bindings for Redux
+- [Redux Logger](https://github.com/LogRocket/redux-logger) - A production Redux logging tool
+- [Reselect](https://github.com/reduxjs/reselect) - A library for creating memoized "selector" functions.
+- [Redux Persist](https://github.com/rt2zz/redux-persist) - Persist and rehydrate a redux store
+- [SASS](https://sass-lang.com/) - Sass is a powerful professional grade CSS extension language
+- [Styled Components](https://styled-components.com/) - Use the best bits of ES6 and CSS to style your apps without stress
+- [Firebase](https://firebase.google.com/) - Quickly develop high-quality apps
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### What I learned
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The reduce() method executes a user-supplied “reducer” callback function on each element of the array, in order, passing in the return value from the calculation on the preceding element. The final result of running the reducer across all elements of the array is a single value.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Using the reduce method here to produce the item count contained in the cart icon.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```js
+const mapStateToProps = ({ cart: { cartItems } }) => ({
+  itemCount: cartItems.reduce(
+          (accumulatedQuantity, cartItem) => accumulatedQuantity + cartItem.quantity,
+          0
+  ),
+});
+```
 
-## Learn More
+### Continued development
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This section will outline areas that need continuing improvements or new components to be added. focusing on the future of the project. These could be concepts still not completely flushed out, or techniques that are new and need to be refined and perfected.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Author
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Website - [Walker Designs](https://www.your-site.com)
+- LinkedIn - [robert-walker-029503221](https://www.linkedin.com/in/robert-walker-029503221/)
+- Twitter - [@RobertW15135868](https://twitter.com/RobertW15135868)
