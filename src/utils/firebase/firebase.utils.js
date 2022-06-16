@@ -9,7 +9,16 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+  query,
+  getDocs,
+} from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAGmGySw2yY6PJJbfirHObeyLHnniKaNzE',
@@ -20,30 +29,53 @@ const firebaseConfig = {
   appId: '1:855909458462:web:cc42c5b00b3418c0c3c40f',
 };
 
-// Initialize firebase app
 const firebaseApp = initializeApp(firebaseConfig);
 
-// Export the getAuth instance
-export const auth = getAuth();
-
-// Google authentication
 const googleProvider = new GoogleAuthProvider();
+
 googleProvider.setCustomParameters({
   prompt: 'select_account',
 });
 
-// Export the Google sign in popup
+export const auth = getAuth();
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
-
-// Export the sign in with Google redirect
 export const signInWithGoogleRedirect = () =>
   signInWithRedirect(auth, googleProvider);
 
-// Instantiate firestore
 export const db = getFirestore();
 
-// Create a user from firestore authentication
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd,
+  field
+) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log('done');
+};
+
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, 'categories');
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return categoryMap;
+};
+
 export const createUserDocumentFromAuth = async (
   userAuth,
   additionalInformation = {}
@@ -51,14 +83,13 @@ export const createUserDocumentFromAuth = async (
   if (!userAuth) return;
 
   const userDocRef = doc(db, 'users', userAuth.uid);
+
   const userSnapshot = await getDoc(userDocRef);
 
-  // If user data does not exist
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
 
-    // create / set the document with the data from userAuth
     try {
       await setDoc(userDocRef, {
         displayName,
@@ -67,28 +98,26 @@ export const createUserDocumentFromAuth = async (
         ...additionalInformation,
       });
     } catch (error) {
-      console.log('Error creating the user', error.message);
+      console.log('error creating the user', error.message);
     }
   }
-  // If user data exists, return userRef
+
   return userDocRef;
 };
 
-// Create a user using email and password
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
+
   return await createUserWithEmailAndPassword(auth, email, password);
 };
 
-// Sign in user with email and password
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
+
   return await signInWithEmailAndPassword(auth, email, password);
 };
 
-// Sign user out
 export const signOutUser = async () => await signOut(auth);
 
-// Track user state with firestore
-export const onAuthStateChangedListener = callback =>
+export const onAuthStateChangedListener = (callback) =>
   onAuthStateChanged(auth, callback);
